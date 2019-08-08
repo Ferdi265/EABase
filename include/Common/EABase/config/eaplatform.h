@@ -610,6 +610,43 @@
 		#define EA_PLATFORM_WINRT 1 
 	#endif
 
+#elif defined(EA_PLATFORM_BAREMETAL)
+	#undef  EA_PLATFORM_BAREMETAL
+	#define EA_PLATFORM_BAREMETAL 1
+	#define EA_PLATFORM_NAME "Baremetal"
+	#if defined(__i386__) || defined(__intel__) || defined(_M_IX86)
+		#define EA_PROCESSOR_X86 1
+		#define EA_SYSTEM_LITTLE_ENDIAN 1
+		#define EA_PLATFORM_DESCRIPTION "Baremetal on x86 32-bits"
+	#elif defined(__ARM_ARCH_7A__) || defined(__ARM_EABI__)
+		#define EA_ABI_ARM_LINUX 1
+		#define EA_PROCESSOR_ARM32 1
+		#define EA_PLATFORM_DESCRIPTION "Baremetal on ARMv7 32-bits"
+	#elif defined(__aarch64__) || defined(__AARCH64)
+		#define EA_PROCESSOR_ARM64 1
+		#define EA_PLATFORM_DESCRIPTION "Baremetal on ARMv8 64-bits"
+	#elif defined(__x86_64__)
+		#define EA_PROCESSOR_X86_64 1
+		#define EA_SYSTEM_LITTLE_ENDIAN 1
+		#define EA_PLATFORM_DESCRIPTION "Baremetal on x86 64-bits"
+	#elif defined(__powerpc64__)
+		#define EA_PROCESSOR_POWERPC 1
+		#define EA_PROCESSOR_POWERPC_64 1
+		#define EA_SYSTEM_BIG_ENDIAN 1
+		#define EA_PLATFORM_DESCRIPTION "Baremetal on PowerPC 64-bits"
+	#elif defined(__powerpc__)
+		#define EA_PROCESSOR_POWERPC 1
+		#define EA_PROCESSOR_POWERPC_32 1
+		#define EA_SYSTEM_BIG_ENDIAN 1
+		#define EA_PLATFORM_DESCRIPTION "Baremetal on PowerPC 32-bits"
+	#else
+		#error Unknown processor
+		#error Unknown endianness
+	#endif
+	#if defined(__GNUC__)
+		#define EA_ASM_STYLE_ATT 1
+	#endif
+
 // Sun (Solaris)
 // __SUNPRO_CC is defined by the Sun compiler.
 // __sun is defined by the GCC compiler.
